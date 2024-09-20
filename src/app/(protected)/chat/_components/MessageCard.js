@@ -7,6 +7,7 @@ export default function MessageCard({
   setLastSender,
   userId,
 }) {
+  console.log(message);
   if (!lastSender) {
     setLastSender(message?.sender);
 

@@ -27,9 +27,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "@/redux/features/auth/authSlice";
 import ScrollableFeed from "react-scrollable-feed";
 import MessageCard from "./MessageCard";
-import { io } from "socket.io-client";
-
-var socket;
+import { socket } from "@/utils/socket";
 
 export default function ChatContainer() {
   const { register, handleSubmit, reset } = useForm();
@@ -44,19 +42,13 @@ export default function ChatContainer() {
     refetchOnMountOrArgChange: true,
   });
   const messages = messagesRes?.data || [];
-
-  // Initialize socket
-  useEffect(() => {
-    socket = io(getSocketEndpoint());
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  // console.log(messages);
 
   // Send message
   const handleSendMsg = async (data) => {
     try {
+      // socket.emit("")
+
       const res = await sendMessage({
         text: data.message,
         receiver: receiverId,
@@ -73,16 +65,22 @@ export default function ChatContainer() {
     }
   };
 
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+
+    // socket.emit("message-page", "66e7b70f537f5342ae555af4");
+  });
+
   // Check if messages exist
   useEffect(() => {
-    if (receiverId) {
-      socket.emit("message-page", "66e7b70f537f5342ae555af4");
-    }
-  }, [receiverId]);
+    socket.emit("message-page", "66e7b70f537f5342ae555af4");
+  });
 
   useEffect(() => {
-    socket.on("message", (message) => {
-      console.log(message);
+    socket.on("message", (data) => {
+      console.log(data);
     });
   });
 
