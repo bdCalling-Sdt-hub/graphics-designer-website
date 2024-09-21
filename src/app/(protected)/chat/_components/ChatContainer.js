@@ -12,6 +12,7 @@ import OwnerMsgCard from "./OwnerMsgCard";
 import {
   useGetMessagesQuery,
   useSendMessageMutation,
+  useUploadImageMutation,
 } from "@/redux/features/message/messageApi";
 import { useForm } from "react-hook-form";
 import {
@@ -29,9 +30,11 @@ import ScrollableFeed from "react-scrollable-feed";
 import MessageCard from "./MessageCard";
 import { useSocket } from "@/context/SocketContextApi";
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
 export default function ChatContainer() {
   const { register, handleSubmit, reset } = useForm();
+  const [fileUploadFn] = useUploadImageMutation();
   const chatBoxRef = useRef(null);
 
   const { socket, socketLoading } = useSocket();
@@ -40,7 +43,15 @@ export default function ChatContainer() {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isReceiverOnline, setIsReceiverOnline] = useState(null);
+  const [image, setImage] = useState(null);
+  const fileInputRef = useRef(null);
 
+  // Function to handle the file input click
+  const handleFileInputClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
   // Set chat id if message exists
   const chatId = useMemo(() => {
     return messages?.length > 0 ? messages[0]?.chat : null;
@@ -66,7 +77,7 @@ export default function ChatContainer() {
     }
 
     return () => {
-      socket.off("message", getMessagesResHandler);
+      socket?.off("message", getMessagesResHandler);
     };
   }, [socket, userId]);
 
@@ -82,7 +93,7 @@ export default function ChatContainer() {
     }
 
     return () => {
-      socket.off("onlineUser", isOnlineResHandler);
+      socket?.off("onlineUser", isOnlineResHandler);
     };
   }, [socket, userId]);
 
@@ -113,7 +124,7 @@ export default function ChatContainer() {
     }
 
     return () => {
-      socket.off(`new-message::${chatId}}`, handleRes);
+      socket?.off(`new-message::${chatId}}`, handleRes);
     };
   }, [socket, userId, chatId]);
 
@@ -123,22 +134,30 @@ export default function ChatContainer() {
   };
 
   // Send message
-  const handleSendMsg = (data) => {
+  const handleSendMsg = async (data) => {
+    setImage(null);
+    setImgPreview(null);
+    fileInputRef.current.value = null;
+
+    const payload = {
+      text: data?.message,
+      receiver: getChatReceiverId(),
+      imageUrl: "",
+    };
     toggleLoading();
 
     try {
+      if (image) {
+        const formData = new FormData();
+        formData.append("image", image);
+        const res = await fileUploadFn(formData).unwrap();
+        payload.imageUrl = res?.data;
+      }
+
       if (socket && userId) {
-        socket.emit(
-          "send-message",
-          {
-            text: data?.message,
-            receiver: getChatReceiverId(),
-            imageUrl: "",
-          },
-          (res) => {
-            setIsLoading(false);
-          },
-        );
+        socket.emit("send-message", payload, (res) => {
+          setIsLoading(false);
+        });
       }
     } catch (error) {
       ErrorToast(error?.data?.message);
@@ -147,6 +166,16 @@ export default function ChatContainer() {
       reset();
     }
   };
+
+  // Image preview
+  const [imgPreview, setImgPreview] = useState(null);
+  useEffect(() => {
+    if (image) {
+      setImgPreview(URL?.createObjectURL(image));
+    }
+  }, [image]);
+
+  console.log(imgPreview);
 
   return (
     <div className="relative z-10 flex flex-col rounded-xl rounded-t-xl border-t-8 border-t-primary-green bg-primary-white px-2 py-6 lg:flex-row">
@@ -199,41 +228,80 @@ export default function ChatContainer() {
           ) : (
             <div className="flex-center min-h-[65vh] w-full">
               <Loader2 size={50} className="animate-spin" color="#6b7280" />
+              {/* <p>Write me a message</p> */}
             </div>
           )}
         </div>
 
-        <form
-          onSubmit={handleSubmit(handleSendMsg)}
-          className="flex-center mt-12 gap-x-4"
-        >
-          <button
-            type="button"
-            disabled={isLoading}
-            className="disabled:text-gray-400"
+        <div>
+          {imgPreview && (
+            <div className="border-b-none relative mx-auto w-[94%] rounded-2xl border-x border-t border-primary-black p-2">
+              <button
+                className="absolute right-2 top-2"
+                onClick={() => {
+                  setImage(null);
+                  setImgPreview(null);
+                  fileInputRef.current.value = null;
+                }}
+              >
+                <X size={20} />
+              </button>
+              {imgPreview && (
+                <Image
+                  src={imgPreview}
+                  alt="image preview"
+                  height={250}
+                  width={250}
+                  className="h-[120px] w-auto rounded-2xl"
+                />
+              )}
+            </div>
+          )}
+          <form
+            onSubmit={handleSubmit(handleSendMsg)}
+            className="flex-center gap-x-4"
           >
-            <Paperclip size={20} />
-          </button>
+            <button
+              type="button"
+              disabled={isLoading}
+              className="disabled:text-gray-400"
+              onClick={handleFileInputClick}
+            >
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  setImage(file);
+                }}
+              />
 
-          <Input
-            placeholder="Type a message"
-            type="text"
-            className="w-full rounded-2xl border border-primary-black bg-transparent px-4 py-[22px] text-base font-medium text-primary-black"
-            {...register("message", { required: true })}
-          />
+              <Paperclip size={20} />
+            </button>
 
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="border-none shadow-none disabled:text-gray-400"
-          >
-            {isLoading ? (
-              <Loader2 size={22} className="animate-spin" />
-            ) : (
-              <Send size={22} />
-            )}
-          </button>
-        </form>
+            {/* Image preview */}
+
+            <Input
+              placeholder="Type a message"
+              type="text"
+              className="w-full rounded-2xl border border-primary-black bg-transparent px-4 py-[22px] text-base font-medium text-primary-black"
+              {...register("message", { required: true })}
+            />
+
+            <button
+              disabled={isLoading}
+              type="submit"
+              className="border-none shadow-none disabled:text-gray-400"
+            >
+              {isLoading ? (
+                <Loader2 size={22} className="animate-spin" />
+              ) : (
+                <Send size={22} />
+              )}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
