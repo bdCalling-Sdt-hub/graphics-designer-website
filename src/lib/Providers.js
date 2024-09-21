@@ -6,12 +6,13 @@ import { PersistGate } from "redux-persist/integration/react";
 import ScrollToTopBtn from "@/components/ScrollToTop/ScrollToTop";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "sonner";
+import { SocketProvider } from "@/context/SocketContextApi";
 
 export default function Providers({ children }) {
   return (
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {children}
+        <SocketProvider>{children}</SocketProvider>
         <ScrollToTopBtn />
         <Toaster position="top-right" richColors duration={1800} />
         <NextTopLoader

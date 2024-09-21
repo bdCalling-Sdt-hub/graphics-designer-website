@@ -1,3 +1,5 @@
+import { selectUser } from "@/redux/features/auth/authSlice";
+import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 
 export const socket = io("http://159.223.184.53:1001", {
@@ -7,6 +9,6 @@ export const socket = io("http://159.223.184.53:1001", {
   transports: ["websocket"],
   auth: {
     token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmVkOTRjMGFhODBkNzEyMjFkMGM5M2MiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyNjg0NjE5MSwiZXhwIjoxNzI5NDM4MTkxfQ.FjzD2fe6OrbXQ6fqGjcY8TB6IdgkcHoMRfMNahZTPuU",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmViYWVlNjBlMmYwNTRjNWI0NjhiNDkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyNjg5MjQ3NywiZXhwIjoxNzI5NDg0NDc3fQ.Q4bt1MgHsA4vVVnvt9_nGt_KW7aKJ8CnixkjPCDZNFA",
   },
 });

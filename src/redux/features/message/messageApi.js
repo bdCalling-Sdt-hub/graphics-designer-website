@@ -12,6 +12,15 @@ const messageApi = baseApi.injectEndpoints({
 
       invalidatesTags: [tagTypes.messages],
     }),
+    uploadImage: builder.mutation({
+      query: (data) => ({
+        url: "/upload",
+        method: "POST",
+        body: data,
+      }),
+
+      invalidatesTags: [tagTypes.messages],
+    }),
 
     getMessages: builder.query({
       query: (chatId) => ({
@@ -24,4 +33,8 @@ const messageApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useSendMessageMutation, useGetMessagesQuery } = messageApi;
+export const {
+  useSendMessageMutation,
+  useGetMessagesQuery,
+  useUploadImageMutation,
+} = messageApi;

@@ -101,6 +101,10 @@ body {
   @apply border-2 border-red-500;
 }
 
+.scroll-hide::-webkit-scrollbar {
+  scrollbar-width: none;
+}
+
 /* Primary button styles */
 .primary-button {
   @apply relative z-10 h-12 overflow-hidden rounded-xl border-none bg-primary-green px-8 font-medium text-primary-white outline-none;
