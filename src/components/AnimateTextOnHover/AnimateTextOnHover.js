@@ -1,11 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-export default function AnimateTextOnHover({ children, link, path }) {
+export default function AnimateTextOnHover({ children, link }) {
   if (link) {
     return (
       <Link href={link} className="block">
@@ -44,7 +42,7 @@ function Container({ children }) {
             key={idx + new Date().toISOString()}
             className="inline-block"
           >
-            {l === " " ? " " : l}
+            {l === " " ? <span>&nbsp;</span> : l}
           </motion.span>
         ))}
       </motion.div>
@@ -68,7 +66,7 @@ function Container({ children }) {
             key={idx + new Date().toISOString()}
             className="inline-block"
           >
-            {l === " " ? " " : l}
+            {l === " " ? <span>&nbsp;</span> : l}
           </motion.span>
         ))}
       </motion.div>

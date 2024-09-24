@@ -31,13 +31,15 @@ import MessageCard from "./MessageCard";
 import { useSocket } from "@/context/SocketContextApi";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
+import { CirclePlus } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function ChatContainer() {
   const { register, handleSubmit, reset } = useForm();
   const [fileUploadFn] = useUploadImageMutation();
   const chatBoxRef = useRef(null);
 
-  const { socket, socketLoading } = useSocket();
+  const { socket, socketLoading, setChatIdFromSocket } = useSocket();
   const receiverId = getChatReceiverId();
   const userId = useSelector(selectUser)?._id;
   const [isLoading, setIsLoading] = useState(false);
@@ -45,6 +47,8 @@ export default function ChatContainer() {
   const [isReceiverOnline, setIsReceiverOnline] = useState(null);
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
+  const pathname = usePathname();
+  const [chatId, setChatId] = useState(null);
 
   // Function to handle the file input click
   const handleFileInputClick = () => {
@@ -53,8 +57,12 @@ export default function ChatContainer() {
     }
   };
   // Set chat id if message exists
-  const chatId = useMemo(() => {
-    return messages?.length > 0 ? messages[0]?.chat : null;
+  useEffect(() => {
+    if (messages?.length > 0) {
+      setChatId(messages[0]?.chat);
+
+      setChatIdFromSocket(messages[0]?.chat);
+    }
   }, [messages]);
 
   // Scroll to bottom of chat box
@@ -113,14 +121,27 @@ export default function ChatContainer() {
    * 1. New message --> (new-message::receiverId/adminId)
    */
   const handleRes = (res) => {
-    console.log(res);
-    setMessages((prev) => [...prev, res]);
+    let newMessage;
+
+    // If user in chat page, make message seen true
+    if (pathname === "/chat") {
+      newMessage = {
+        ...res,
+        seen: true,
+      };
+    } else {
+      newMessage = { ...res };
+    }
+
+    // setMessages((prev) => [...prev, newMessage]);
+    getMessagesResHandler([...messages, newMessage]);
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    if (socket && userId) {
+    if (socket && userId && chatId) {
       socket.on(`new-message::${chatId}`, handleRes);
-      setIsLoading(false);
     }
 
     return () => {
@@ -128,13 +149,9 @@ export default function ChatContainer() {
     };
   }, [socket, userId, chatId]);
 
-  // Toggle loading state
-  const toggleLoading = () => {
-    setIsLoading(!isLoading);
-  };
-
   // Send message
   const handleSendMsg = async (data) => {
+    setIsLoading(true);
     setImage(null);
     setImgPreview(null);
     fileInputRef.current.value = null;
@@ -144,7 +161,6 @@ export default function ChatContainer() {
       receiver: getChatReceiverId(),
       imageUrl: "",
     };
-    toggleLoading();
 
     try {
       if (image) {
@@ -155,8 +171,8 @@ export default function ChatContainer() {
       }
 
       if (socket && userId) {
-        socket.emit("send-message", payload, (res) => {
-          setIsLoading(false);
+        socket.emit("send-message", payload, async (res) => {
+          // do nothing
         });
       }
     } catch (error) {
@@ -174,8 +190,6 @@ export default function ChatContainer() {
       setImgPreview(URL?.createObjectURL(image));
     }
   }, [image]);
-
-  console.log(imgPreview);
 
   return (
     <div className="relative z-10 flex flex-col rounded-xl rounded-t-xl border-t-8 border-t-primary-green bg-primary-white px-2 py-6 lg:flex-row">
@@ -213,24 +227,34 @@ export default function ChatContainer() {
 
         {/* Chat messages */}
         <div
-          className="scroll-hide max-h-[65vh] min-h-[65vh] overflow-auto py-8"
+          className="scroll-hide max-h-[65vh] min-h-[65vh] overflow-auto py-10"
           ref={chatBoxRef}
         >
-          {messages?.length > 0 ? (
-            messages?.map((msg, index) => (
-              <MessageCard
-                key={msg?._id}
-                message={msg}
-                userId={userId}
-                previousMessage={index > 0 ? messages[index - 1] : null}
-              />
-            ))
-          ) : (
-            <div className="flex-center min-h-[65vh] w-full">
-              <Loader2 size={50} className="animate-spin" color="#6b7280" />
-              {/* <p>Write me a message</p> */}
-            </div>
-          )}
+          <div>
+            {messages === undefined ? (
+              <div className="flex-center min-h-[65vh] w-full gap-x-2 text-2xl font-bold">
+                <Loader2 size={50} className="animate-spin" color="#6b7280" />
+              </div>
+            ) : (
+              <>
+                {messages?.length > 0 ? (
+                  messages?.map((msg, index) => (
+                    <MessageCard
+                      key={msg?._id}
+                      message={msg}
+                      userId={userId}
+                      previousMessage={index > 0 ? messages[index - 1] : null}
+                    />
+                  ))
+                ) : (
+                  <div className="flex-center min-h-[65vh] w-full gap-x-2 text-2xl font-bold">
+                    <CirclePlus />
+                    <p>Write me a message</p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
 
         <div>

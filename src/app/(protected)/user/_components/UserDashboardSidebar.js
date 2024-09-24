@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { ErrorModal, SuccessModal } from "@/utils/modalHook";
 import { X } from "lucide-react";
 import { Loader } from "lucide-react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { firstLetterUppercase } from "@/utils/firstLetterUppercase";
 import { logout } from "@/redux/features/auth/authSlice";
 import {
@@ -109,9 +109,14 @@ export default function UserDashboardSidebar() {
             ) : user?.image ? (
               <Avatar className="h-[90px] w-[90px]">
                 <AvatarImage src={user?.image} />
+                <AvatarFallback>
+                  {user?.name &&
+                    firstLetterUppercase(user?.name[0]) +
+                      firstLetterUppercase(user?.name[1])}
+                </AvatarFallback>
               </Avatar>
             ) : (
-              <div className="text-foundation-orange-normal flex h-[90px] w-[90px] items-center justify-center rounded-full bg-gray-800 text-2xl font-bold uppercase">
+              <div className="flex h-[90px] w-[90px] items-center justify-center rounded-full bg-primary-green text-2xl font-bold uppercase text-white">
                 <p>
                   {user?.name &&
                     firstLetterUppercase(user?.name[0]) +

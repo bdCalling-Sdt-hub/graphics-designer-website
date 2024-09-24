@@ -5,8 +5,6 @@ import "./Navbar.css";
 import logo from "/public/images/logo.svg";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Bell } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,12 +13,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "lucide-react";
-import { Shirt } from "lucide-react";
-import { History } from "lucide-react";
 import { LogOut } from "lucide-react";
 import AnimateTextOnHover from "@/components/AnimateTextOnHover/AnimateTextOnHover";
-import AnimatedArrow from "@/components/AnimatedArrow/AnimatedArrow";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { MessageSquareText } from "lucide-react";
 import { useSelector } from "react-redux";
 import { logout, selectUser } from "@/redux/features/auth/authSlice";
@@ -28,6 +23,8 @@ import { useDispatch } from "react-redux";
 import { SuccessModal } from "@/utils/modalHook";
 import { Settings } from "lucide-react";
 import { useGetProfileQuery } from "@/redux/features/user/userApi";
+import { useSocket } from "@/context/SocketContextApi";
+import { useEffect, useState } from "react";
 
 // Links
 const LINKS = [
@@ -44,7 +41,7 @@ const LINKS = [
   },
   {
     key: "designs",
-    label: "Designs",
+    label: "My Designs",
     route: "/#designs",
   },
   {
@@ -66,12 +63,39 @@ export default function Navbar() {
   const userId = user?._id;
   const dispatch = useDispatch();
   const router = useRouter();
+  const { socket, chatIdFromSocket } = useSocket();
+  const [unreadNotification, setUnreadNotification] = useState([]);
+  const pathname = usePathname();
 
   const handleLogout = () => {
     dispatch(logout());
     SuccessModal("Logout Successful");
     router.refresh();
   };
+
+  useEffect(() => {
+    if (socket && userId && chatIdFromSocket) {
+      socket.on(`new-message::${chatIdFromSocket}`, (res) => {
+        if (res?.sender !== userId) {
+          setUnreadNotification([...unreadNotification, res]);
+        }
+      });
+    }
+
+    return () => {
+      socket?.off(`new-message::${chatIdFromSocket}}`, (res) => {
+        if (res?.sender !== userId) {
+          setUnreadNotification([...unreadNotification, res]);
+        }
+      });
+    };
+  }, [socket, userId, chatIdFromSocket, unreadNotification]);
+
+  useEffect(() => {
+    if (pathname === "/chat") {
+      setUnreadNotification([]);
+    }
+  });
 
   return (
     <header className="z-[9999] mt-3 w-full">
@@ -101,22 +125,15 @@ export default function Navbar() {
         <div className="flex w-[20%] items-center justify-end">
           {userId ? (
             <div className="flex items-center gap-x-6">
-              {/* <Link
-                href="/notifications"
-                className="relative"
-                title="notifications"
-              >
-                <Bell size={24} />
-                <Badge className="flex-center absolute -right-2 -top-2 h-5 w-2 rounded-full bg-red-600 text-xs">
-                  4
-                </Badge>
-              </Link> */}
-
               <Link href="/chat" className="relative" title="Chat">
                 <MessageSquareText size={24} />
-                <Badge className="flex-center absolute -right-2 -top-2 h-5 w-2 rounded-full bg-red-600 text-xs">
-                  2
-                </Badge>
+                {unreadNotification?.length > 0 && (
+                  <div className="flex-center ping absolute -right-2 -top-2 h-5 w-5 rounded-full bg-red-600 text-xs font-semibold text-white">
+                    {unreadNotification?.length > 9
+                      ? "9+"
+                      : unreadNotification?.length}
+                  </div>
+                )}
               </Link>
 
               {/* ---------- User profile --------------- */}

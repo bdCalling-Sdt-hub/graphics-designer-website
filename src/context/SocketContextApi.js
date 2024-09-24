@@ -14,6 +14,7 @@ export const useSocket = () => {
 export const SocketProvider = ({ children }) => {
   const [socketLoading, setSocketLoading] = useState(false);
   const token = useSelector(selectToken);
+  const [chatIdFromSocket, setChatIdFromSocket] = useState(null);
 
   const socket = useMemo(() => {
     setSocketLoading(true);
@@ -35,7 +36,9 @@ export const SocketProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <SocketContext.Provider value={{ socket, socketLoading }}>
+    <SocketContext.Provider
+      value={{ socket, socketLoading, setChatIdFromSocket, chatIdFromSocket }}
+    >
       {children}
     </SocketContext.Provider>
   );

@@ -14,7 +14,7 @@ export default function OwnerMsgCard({ message }) {
           className="h-[160px] w-auto"
         />
       )}
-      <p className="mt-2 font-medium text-primary-black">{message?.text}</p>
+      <p className="font-medium text-primary-black">{message?.text}</p>
     </div>
   );
 }
