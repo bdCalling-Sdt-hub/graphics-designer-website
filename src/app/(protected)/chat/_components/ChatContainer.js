@@ -47,7 +47,6 @@ export default function ChatContainer() {
   const [isReceiverOnline, setIsReceiverOnline] = useState(null);
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
-  const pathname = usePathname();
   const [chatId, setChatId] = useState(null);
 
   // Function to handle the file input click
@@ -65,6 +64,12 @@ export default function ChatContainer() {
     }
   }, [messages]);
 
+  // const chatId = useMemo(() => {
+  //   if (messages?.length > 0) {
+  //     return messages[0]?.chat;
+  //   }
+  // }, [messages]);
+
   // Scroll to bottom of chat box
   useEffect(() => {
     if (messages) {
@@ -74,18 +79,18 @@ export default function ChatContainer() {
     }
   }, [messages]);
 
-  // ------------------ Check if messages exist -------------------
-  const getMessagesResHandler = (response) => {
-    setMessages(response);
-  };
-
+  // ------------------ Check if messages exist ------------------
   useEffect(() => {
     if (socket && userId) {
-      socket.on("message", getMessagesResHandler);
+      socket.on("message", (res) => {
+        setMessages(res);
+      });
     }
 
     return () => {
-      socket?.off("message", getMessagesResHandler);
+      socket?.off("message", (res) => {
+        setMessages(res);
+      });
     };
   }, [socket, userId]);
 
@@ -112,7 +117,7 @@ export default function ChatContainer() {
    */
   useEffect(() => {
     if (socket && userId) {
-      socket.emit("message-page", getChatReceiverId());
+      socket.emit("message-page", receiverId);
     }
   }, [socket, userId]);
 
@@ -120,32 +125,19 @@ export default function ChatContainer() {
    * Listen `send-message` to get
    * 1. New message --> (new-message::receiverId/adminId)
    */
-  const handleRes = (res) => {
-    let newMessage;
-
-    // If user in chat page, make message seen true
-    if (pathname === "/chat") {
-      newMessage = {
-        ...res,
-        seen: true,
-      };
-    } else {
-      newMessage = { ...res };
-    }
-
-    // setMessages((prev) => [...prev, newMessage]);
-    getMessagesResHandler([...messages, newMessage]);
-
-    setIsLoading(false);
-  };
-
   useEffect(() => {
     if (socket && userId && chatId) {
-      socket.on(`new-message::${chatId}`, handleRes);
+      socket.on(`new-message::${chatId}`, (res) => {
+        setMessages((prev) => [...prev, res]);
+        setIsLoading(false);
+      });
     }
 
     return () => {
-      socket?.off(`new-message::${chatId}}`, handleRes);
+      socket?.off(`new-message::${chatId}}`, (res) => {
+        setMessages((prev) => [...prev, res]);
+        setIsLoading(false);
+      });
     };
   }, [socket, userId, chatId]);
 
@@ -153,12 +145,11 @@ export default function ChatContainer() {
   const handleSendMsg = async (data) => {
     setIsLoading(true);
     setImage(null);
-    setImgPreview(null);
     fileInputRef.current.value = null;
 
     const payload = {
       text: data?.message,
-      receiver: getChatReceiverId(),
+      receiver: receiverId,
       imageUrl: "",
     };
 
@@ -175,11 +166,12 @@ export default function ChatContainer() {
           // do nothing
         });
       }
+
+      setImgPreview(null);
+      reset();
     } catch (error) {
       ErrorToast(error?.data?.message);
       setIsLoading(false);
-    } finally {
-      reset();
     }
   };
 
@@ -258,6 +250,7 @@ export default function ChatContainer() {
         </div>
 
         <div>
+          {/* Image preview */}
           {imgPreview && (
             <div className="border-b-none relative mx-auto w-[94%] rounded-2xl border-x border-t border-primary-black p-2">
               <button
@@ -303,8 +296,6 @@ export default function ChatContainer() {
 
               <Paperclip size={20} />
             </button>
-
-            {/* Image preview */}
 
             <Input
               placeholder="Type a message"

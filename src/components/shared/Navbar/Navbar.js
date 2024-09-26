@@ -92,18 +92,24 @@ export default function Navbar() {
   }, [socket, userId, chatIdFromSocket, unreadNotification]);
 
   useEffect(() => {
-    if (pathname === "/chat") {
+    if (pathname === "/chat" && unreadNotification?.length > 0) {
       setUnreadNotification([]);
     }
-  });
+  }, [pathname, unreadNotification]);
 
   return (
     <header className="z-[9999] mt-3 w-full">
       {/* -------------- Desktop Version ------------- */}
       <div className="flex-center-between container">
         {/* Left ----- Logo */}
-        <Link href="/" className="w-[13%]">
-          <Image src={logo} alt="Logo" className="" />
+        <Link href="/" className="">
+          <Image
+            src={logo}
+            alt="Logo"
+            className="size-[150px]"
+            height={100}
+            width={100}
+          />
         </Link>
 
         {/* Center ------ Links */}
