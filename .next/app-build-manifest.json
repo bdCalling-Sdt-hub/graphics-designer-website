@@ -1,0 +1,32 @@
+{
+  "pages": {
+    "/(public)/home/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(public)/home/page.css",
+      "static/chunks/app/(public)/home/page.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/(protected)/user/profile/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(protected)/user/profile/page.css",
+      "static/chunks/app/(protected)/user/profile/page.js"
+    ],
+    "/(protected)/user/template": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/user/template.js"
+    ],
+    "/(protected)/chat/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/chat/page.js"
+    ]
+  }
+}
