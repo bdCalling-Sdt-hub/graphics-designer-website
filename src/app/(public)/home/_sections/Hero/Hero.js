@@ -33,9 +33,11 @@ const fadeUp = {
 const delayedOpacity = {
   initial: {
     opacity: 0,
+    scale: 0.95,
   },
   animate: {
     opacity: 1,
+    scale: 1,
     transition: {
       delay: 1,
       duration: 1,

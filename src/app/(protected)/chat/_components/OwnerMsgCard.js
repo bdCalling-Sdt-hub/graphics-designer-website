@@ -1,3 +1,4 @@
+import { showImage } from "@/utils/fileHelper";
 import Image from "next/image";
 import React from "react";
 
@@ -6,7 +7,7 @@ export default function OwnerMsgCard({ message }) {
     <div className={"mt-2 max-w-max rounded-xl bg-gray-200 px-3 py-2"}>
       {message?.imageUrl && (
         <Image
-          src={message?.imageUrl}
+          src={showImage(message?.imageUrl)}
           alt={message?.text}
           height={200}
           width={200}

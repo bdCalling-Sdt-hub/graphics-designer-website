@@ -43,6 +43,7 @@ export default function LoginForm() {
         router.refresh();
       }
     } catch (error) {
+      console.log(error);
       ErrorModal(error?.data?.message);
     }
   };

@@ -11,9 +11,12 @@ export default function Contact() {
   const [showRequestModal, setShowRequestModal] = useState(false);
 
   return (
-    <section id="contact" className="flex-center-between container gap-x-20">
+    <section
+      id="contact"
+      className="flex-center-between container flex-col gap-x-20 gap-y-16 lg:flex-row"
+    >
       {/* Left */}
-      <div>
+      <div className="lg:w-1/2">
         <h1 className="text-6xl font-extrabold leading-[1.4]">
           Ready to Bring Your Vision to Life? 🚀
         </h1>
@@ -22,7 +25,7 @@ export default function Contact() {
       <Separator orientation="vertical" className="h-[300px]" />
 
       {/* Right */}
-      <div>
+      <div className="lg:w-1/2">
         <p className="font-medium">
           Whether you&apos;ve specific project in mind or want to discuss with
           how we can capture your moments, we&apos;re here to make it happen.

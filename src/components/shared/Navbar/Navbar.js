@@ -25,6 +25,7 @@ import { Settings } from "lucide-react";
 import { useGetProfileQuery } from "@/redux/features/user/userApi";
 import { useSocket } from "@/context/SocketContextApi";
 import { useEffect, useState } from "react";
+import { showImage } from "@/utils/fileHelper";
 
 // Links
 const LINKS = [
@@ -147,7 +148,7 @@ export default function Navbar() {
                 <DropdownMenu>
                   <DropdownMenuTrigger className="border-none outline-none ring-0">
                     <Avatar className="h-11 w-11">
-                      <AvatarImage src={profile?.image} />
+                      <AvatarImage src={showImage(profile?.image)} />
                       <AvatarFallback className="bg-primary-green font-semibold text-primary-white">
                         {profile?.name?.split(" ").map((name) => name[0])}
                       </AvatarFallback>

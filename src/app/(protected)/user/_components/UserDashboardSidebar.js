@@ -20,6 +20,7 @@ import {
   useGetProfileQuery,
   useUpdateProfileMutation,
 } from "@/redux/features/user/userApi";
+import { showImage } from "@/utils/fileHelper";
 
 export default function UserDashboardSidebar() {
   const pathname = usePathname().replace("/user/", "");
@@ -68,13 +69,14 @@ export default function UserDashboardSidebar() {
 
     try {
       const res = await updateProfile(formData).unwrap();
+
       if (res?.success) {
         SuccessModal("Profile picture updated successfully");
 
         setProfilePicUrl(null);
         setProfilePicInput(null);
         document.getElementById("profilePicInput").value = null;
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (error) {
       ErrorModal(error?.data?.message);
@@ -108,7 +110,7 @@ export default function UserDashboardSidebar() {
               </div>
             ) : user?.image ? (
               <Avatar className="h-[90px] w-[90px]">
-                <AvatarImage src={user?.image} />
+                <AvatarImage src={showImage(user?.image)} />
                 <AvatarFallback>
                   {user?.name &&
                     firstLetterUppercase(user?.name[0]) +
