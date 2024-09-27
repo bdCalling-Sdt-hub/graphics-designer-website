@@ -1,0 +1,38 @@
+/* Bubble animation on hover effect */
+.hover-bubble {
+  z-index: 1;
+  position: relative;
+  font-size: inherit;
+  font-family: inherit;
+  overflow: hidden;
+  color: var(--primary-black);
+  border: 2px solid var(--primary-green);
+  transition: all 0.5s ease-in-out;
+}
+
+.hover-bubble::before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  border: 2px solid var(--primary-green);
+  top: 100%;
+  right: 100%;
+  width: 2.5em;
+  height: 1em;
+  border-radius: 50%;
+  background-color: var(--primary-green);
+  transform-origin: center;
+  transform: translate3d(50%, -50%, 0) scale3d(0, 0, 0);
+  transition: transform 0.5s ease-in-out;
+}
+
+.hover-bubble:hover {
+  cursor: pointer;
+  color: var(--primary-white);
+  background-color: transparent;
+  transition: all 0.4s ease-in-out;
+}
+
+.hover-bubble:hover::before {
+  transform: translate3d(50%, -50%, 0) scale3d(15, 15, 15);
+}

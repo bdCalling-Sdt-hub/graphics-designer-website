@@ -1,0 +1,10 @@
+.dashboard-colored-title {
+  color: var(--primary-green);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* order history table */
+.order-table tr:nth-of-type(even) {
+  background-color: rgba(246, 246, 255, 0.76) !important;
+}
