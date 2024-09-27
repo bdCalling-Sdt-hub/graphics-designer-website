@@ -1,5 +1,5 @@
 {
   "/(public)/home/page": "app/(public)/home/page.js",
-  "/(protected)/user/profile/page": "app/(protected)/user/profile/page.js",
-  "/(protected)/chat/page": "app/(protected)/chat/page.js"
+  "/(protected)/chat/page": "app/(protected)/chat/page.js",
+  "/(Auth)/login/page": "app/(Auth)/login/page.js"
 }

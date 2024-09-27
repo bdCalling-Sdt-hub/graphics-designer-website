@@ -12,16 +12,16 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(protected)/user/profile/page": [
+    "/(Auth)/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/(protected)/user/profile/page.css",
-      "static/chunks/app/(protected)/user/profile/page.js"
+      "static/chunks/app/(Auth)/login/page.js"
     ],
-    "/(protected)/user/template": [
+    "/(Auth)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(protected)/user/template.js"
+      "static/css/app/(Auth)/layout.css",
+      "static/chunks/app/(Auth)/layout.js"
     ],
     "/(protected)/chat/page": [
       "static/chunks/webpack.js",
