@@ -7,18 +7,18 @@ import Image from "next/image";
 export default function About() {
   return (
     <section id="about" className="relative py-10">
-      <div className="flex-center-between container">
+      <div className="flex-center-between container flex-col-reverse gap-y-20 lg:flex-row">
         {/* Left */}
         <div className="lg:w-[50%]">
           <div className="flex-center-start gap-x-3">
-            <div className="text-primary-green flex-center h-8 w-8 rounded-lg bg-[#dbf4e7] p-1">
+            <div className="flex-center h-8 w-8 rounded-lg bg-[#dbf4e7] p-1 text-primary-green">
               <Diamond />
             </div>
             <p className="text-lg font-medium">About Us</p>
           </div>
           <h3 className="my-7 text-4xl font-extrabold">Our Overview</h3>
 
-          <p className="text-primary-black/75 text-lg font-medium">
+          <p className="text-lg font-medium text-primary-black/75">
             Carlio brand is one of the most reliable motor oil manufacturers,
             which is engaged in the production of high quality products with a
             history of more than decades in the industry. In order to get more
@@ -26,7 +26,7 @@ export default function About() {
             you can use the following buttons:
           </p>
 
-          <p className="text-primary-black/75 mt-8 text-lg font-medium">
+          <p className="mt-8 text-lg font-medium text-primary-black/75">
             The meaning of production in Carlio is the creation, development,
             and the path to progress, and the starting point to achieve the
             goals that we all have the Petroforce brand, with over 20 years of

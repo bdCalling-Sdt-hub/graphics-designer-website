@@ -51,18 +51,18 @@ export default function Hero() {
     <motion.section
       initial="initial"
       animate="animate"
-      className="flex-center-between container relative z-10 flex-col gap-y-16 lg:flex-row"
+      className="container relative flex flex-col items-center gap-y-24 lg:flex-row lg:justify-between"
     >
       {/* left */}
       <motion.div
         variants={fadeUp}
-        className="z-10 w-full text-primary-black sm:w-3/4 lg:w-1/2"
+        className="z-10 w-full text-primary-black lg:w-1/2"
       >
         <motion.div className="chip" key="tileChip" variants={fadeUp}>
           <p>Welcome</p>
         </motion.div>
 
-        <h2 className="mb-4 mt-3 overflow-hidden text-6xl font-extrabold leading-[1.2] lg:leading-snug">
+        <h2 className="mb-4 mt-3 overflow-hidden py-2 font-extrabold leading-relaxed ~text-5xl/6xl ~space-y-3/4">
           <AnimatedText>I have Creative Design Experience</AnimatedText>
         </h2>
 
@@ -83,10 +83,6 @@ export default function Hero() {
             <Link href={"/#contact"}>Contact Me</Link>
           </Button>
         </motion.div>
-
-        {/** If user not present -
-         * Show Authentication Required form modal
-         * else Show Request form modal */}
       </motion.div>
 
       {/* right */}
@@ -109,7 +105,7 @@ export default function Hero() {
       {/* floating dots */}
       <motion.div
         variants={delayedOpacity}
-        className="absolute -left-[180px] -top-[210px] -z-10"
+        className="absolute -z-10 hidden lg:-left-[200px] lg:-top-[270px] lg:block"
       >
         <Image
           src={floatingDots}

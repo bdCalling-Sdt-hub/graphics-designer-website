@@ -26,6 +26,8 @@ import { useGetProfileQuery } from "@/redux/features/user/userApi";
 import { useSocket } from "@/context/SocketContextApi";
 import { useEffect, useState } from "react";
 import { showImage } from "@/utils/fileHelper";
+import { Menu } from "lucide-react";
+import MobileSidebar from "./Components/MobileSidebar";
 
 // Links
 const LINKS = [
@@ -67,6 +69,7 @@ export default function Navbar() {
   const { socket, chatIdFromSocket } = useSocket();
   const [unreadNotification, setUnreadNotification] = useState([]);
   const pathname = usePathname();
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -74,6 +77,7 @@ export default function Navbar() {
     router.refresh();
   };
 
+  // Handle socket notification logics
   useEffect(() => {
     if (socket && userId && chatIdFromSocket) {
       socket.on(`new-message::${chatIdFromSocket}`, (res) => {
@@ -100,8 +104,8 @@ export default function Navbar() {
 
   return (
     <header className="z-[9999] mt-3 w-full">
-      {/* -------------- Desktop Version ------------- */}
-      <div className="flex-center-between container">
+      {/* ============ Desktop Version ============ */}
+      <div className="container hidden items-center justify-between lg:flex">
         {/* Left ----- Logo */}
         <Link href="/" className="">
           <Image
@@ -191,6 +195,39 @@ export default function Navbar() {
             </Button>
           )}
         </div>
+      </div>
+
+      {/* =========== Mobile Version ============ */}
+      <div className="mx-auto flex w-[90%] items-center justify-between lg:hidden">
+        {/* left */}
+        <Image
+          src={logo}
+          alt="logo"
+          height={1200}
+          width={1200}
+          className="~size-36/40"
+        />
+
+        {/* right */}
+        <button onClick={() => setShowMobileSidebar(true)}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="2.3em"
+            height="2.3em"
+            viewBox="0 0 26 26"
+            className="-scale-x-100 hover:text-muted-foreground"
+          >
+            <g fill="currentColor" fillRule="evenodd" clipRule="evenodd">
+              <path d="M5 11a1 1 0 0 1 1-1h10.308a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1m0-4a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1m0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1m0 4a1 1 0 0 1 1-1h10.308a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1"></path>
+              <path d="M13 24c6.075 0 11-4.925 11-11S19.075 2 13 2S2 6.925 2 13s4.925 11 11 11m0 2c7.18 0 13-5.82 13-13S20.18 0 13 0S0 5.82 0 13s5.82 13 13 13"></path>
+            </g>
+          </svg>
+        </button>
+
+        <MobileSidebar
+          open={showMobileSidebar}
+          setOpen={setShowMobileSidebar}
+        />
       </div>
     </header>
   );

@@ -12,6 +12,8 @@ module.exports = {
     extract,
   },
   theme: {
+    screens,
+    fontSize,
     extend: {
       colors: {
         "primary-black": "#232323",
@@ -71,6 +73,7 @@ module.exports = {
       },
       transitionTimingFunction: {
         "in-out-circ": "cubic-bezier(0.85, 0, 0.15, 1)",
+        "in-out-expo": "cubic-bezier(0.87, 0, 0.13, 1)",
       },
       keyframes: {
         "accordion-down": {

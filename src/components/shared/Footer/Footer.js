@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="container mb-5 mt-20">
       <Separator className="my-5 h-[1px] bg-primary-black/40" />
 
-      <div className="flex-center-between">
+      <div className="flex-center-between flex-col gap-y-5 lg:flex-row">
         <p className="font-medium">&copy; 2024. All Rights Reserved</p>
 
         <Link
