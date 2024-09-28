@@ -11,6 +11,32 @@
       "static/chunks/main-app.js",
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
+    ],
+    "/(Auth)/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(Auth)/login/page.js"
+    ],
+    "/(Auth)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(Auth)/layout.css",
+      "static/chunks/app/(Auth)/layout.js"
+    ],
+    "/(Auth)/sign-up/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(Auth)/sign-up/page.js"
+    ],
+    "/(Auth)/forgot-password/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(Auth)/forgot-password/page.js"
+    ],
+    "/(Auth)/verify-otp/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(Auth)/verify-otp/page.js"
     ]
   }
 }
