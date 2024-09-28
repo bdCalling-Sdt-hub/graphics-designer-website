@@ -21,20 +21,23 @@ const DESIGN_CATEGORIES = [
 export default function Designs() {
   return (
     <section id="designs" className="relative py-10">
-      <div className="flex-start-between container">
+      <div className="flex-start-between container flex-col gap-y-6 lg:flex-row">
         {/* Left */}
-        <div className="flex flex-col items-start gap-y-16 lg:w-[20%]">
+        <div className="flex w-full flex-row items-start gap-x-8 gap-y-16 overflow-auto lg:w-[20%] lg:flex-col">
           {DESIGN_CATEGORIES.map((category) => (
-            <button key={category.key} className="text-lg text-primary-green">
+            <button
+              key={category.key}
+              className="whitespace-nowrap text-lg text-primary-green"
+            >
               {category.category}
             </button>
           ))}
         </div>
 
         {/* Right --- Design Images */}
-        <div className="flex-center-between flex h-[600px] gap-x-5 lg:flex-grow">
+        <div className="flex-center-between flex h-[600px] w-full gap-x-5 lg:flex-grow">
           {/* Column 1 */}
-          <div className="flex h-full flex-col gap-y-3 lg:w-1/3">
+          <div className="flex h-full w-full flex-col gap-y-3 lg:w-1/3">
             <div
               className="group relative h-[60%] w-full overflow-hidden rounded-xl transition-all duration-500 ease-in-out hover:scale-105"
               style={{
@@ -55,7 +58,7 @@ export default function Designs() {
           </div>
 
           {/* Column 2 */}
-          <div className="flex h-full flex-col gap-y-3 lg:w-1/3">
+          <div className="flex h-full w-full flex-col gap-y-3 lg:w-1/3">
             {/* Sweatshirt */}
             <div
               className="group relative h-[25%] w-full overflow-hidden rounded-xl transition-all duration-500 ease-in-out hover:scale-105"
@@ -88,7 +91,7 @@ export default function Designs() {
           </div>
 
           {/* Column 3 */}
-          <div className="flex h-full flex-col gap-y-3 lg:w-1/3">
+          <div className="flex h-full w-full flex-col gap-y-3 lg:w-1/3">
             {/* Hoodie */}
             <div
               className="group relative h-[60%] w-full overflow-hidden rounded-xl transition-all duration-500 ease-in-out hover:scale-105"

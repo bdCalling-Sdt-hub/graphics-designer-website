@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <div className="mb-20 mt-28 space-y-24">
+    <div className="mb-20 space-y-24 ~mt-8/20">
       <Hero />
 
       <Skills />

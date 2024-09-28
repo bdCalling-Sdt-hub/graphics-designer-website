@@ -37,16 +37,21 @@ export default function Skills() {
 
   return (
     <section id="skills" className="relative py-16">
-      <div className="flex-center-between container gap-x-20 text-primary-black">
+      <div className="flex-center-between container flex-col gap-x-20 gap-y-20 text-primary-black lg:flex-row">
         {/* Left */}
-        <div className="w-[45%]">
+        <div className="lg:w-[45%]">
           <div className="chip">
             <p>My Skills</p>
           </div>
 
-          <h3 className="mb-4 mt-3 text-5xl font-extrabold leading-[1.2] lg:leading-snug">
+          <h3
+            className="mb-4 mt-3 py-2 font-extrabold ~text-5xl/6xl"
+            style={{ lineHeight: 1.3 }}
+          >
             Why Hire Me For Your{" "}
-            <span className="text-primary-green">Next Project?</span>
+            <span className="inline-block text-primary-green">
+              Next Project?
+            </span>
           </h3>
 
           <p className="text-lg font-medium text-primary-black/75">
@@ -80,7 +85,7 @@ export default function Skills() {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true, amount: 0.2 }}
-          className="flex-center w-1/2 gap-x-10"
+          className="grid grid-cols-1 gap-x-10 md:flex md:items-center lg:w-1/2"
         >
           <div className="w-full space-y-10">
             <motion.div

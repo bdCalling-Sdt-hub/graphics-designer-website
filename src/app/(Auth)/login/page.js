@@ -11,18 +11,18 @@ export const metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="flex-center container flex-col px-4 lg:flex-row lg:px-0">
+    <div className="flex-center container flex-col gap-y-8 lg:flex-row">
       {/* left */}
-      <div className="lg:w-1/2">
+      <div className="w-full lg:w-1/2">
         <Image
           src={loginGraphic}
           alt="login graphic"
-          className="mx-auto block w-[70%]"
+          className="mx-auto block w-full lg:w-[70%]"
         />
       </div>
 
       {/* right */}
-      <div className="text-primary-black lg:w-1/2">
+      <div className="w-full text-primary-black lg:w-1/2">
         <Link href="/" className="mx-auto block w-max">
           <Image src={logo} alt="logo" className="" />
         </Link>

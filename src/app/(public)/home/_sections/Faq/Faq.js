@@ -53,9 +53,9 @@ const FAQs = [
 export default function Faq() {
   return (
     <section id="faq" className="relative">
-      <div className="flex-start-between container z-10 gap-x-16">
+      <div className="flex-start-between container z-10 flex-col gap-x-16 gap-y-16 lg:flex-row">
         {/* Left */}
-        <div className="relative z-10 mt-16 lg:w-1/2">
+        <div className="relative z-10 h-[550px] w-full lg:mt-16 lg:h-auto lg:w-1/2">
           <Image
             src={backgroundImg}
             alt="background image"
@@ -64,12 +64,12 @@ export default function Faq() {
           <Image
             src={foregroundImg}
             alt="foreground image"
-            className="absolute left-0 top-[220px] z-10"
+            className="absolute top-[220px] z-10 ~-left-5/0"
           />
         </div>
 
         {/* Right */}
-        <div className="z-10 lg:w-1/2">
+        <div className="z-10 w-full lg:w-1/2">
           <div className="flex-center-start gap-x-3">
             <div className="flex-center h-8 w-8 rounded-lg bg-[#dbf4e7] p-1 text-primary-green">
               <CircleHelp />
