@@ -35,7 +35,12 @@ import { CirclePlus } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export default function ChatContainer() {
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [fileUploadFn] = useUploadImageMutation();
   const chatBoxRef = useRef(null);
 
@@ -300,8 +305,11 @@ export default function ChatContainer() {
             <Input
               placeholder="Type a message"
               type="text"
-              className="w-full rounded-2xl border border-primary-black bg-transparent px-4 py-[22px] text-base font-medium text-primary-black"
-              {...register("message", { required: true })}
+              className={cn(
+                "w-full rounded-2xl border border-primary-black bg-transparent px-4 py-[22px] text-base font-medium text-primary-black",
+                errors?.message && "outline-red-500",
+              )}
+              {...register("message", { required: imgPreview ? false : true })}
             />
 
             <button

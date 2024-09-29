@@ -41,7 +41,7 @@ export default function ContinueToLoginModal({ open, setOpen, text }) {
             Cancel
           </AlertDialogCancel>
           <Link href="/login">
-            <AlertDialogAction className="group gap-x-1 bg-primary-green">
+            <AlertDialogAction className="group flex w-full items-center gap-x-1 bg-primary-green lg:w-auto">
               Continue to login <AnimatedArrow size={16} />
             </AlertDialogAction>
           </Link>

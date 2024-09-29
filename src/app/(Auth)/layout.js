@@ -9,7 +9,7 @@ export default function layout({ children }) {
       <Image
         src={authBg}
         alt="background image"
-        className="absolute inset-0 -z-10 h-[120vh] w-full"
+        className="absolute inset-0 -z-[999] h-[160vh] w-full sm:h-[170vh] lg:h-[120vh]"
       />
 
       <div className="min-h-[120vh]">{children}</div>

@@ -17,12 +17,17 @@ export default function Contact() {
     >
       {/* Left */}
       <div className="lg:w-1/2">
-        <h1 className="text-6xl font-extrabold leading-[1.4]">
+        <h1
+          className="font-extrabold ~text-5xl/6xl"
+          style={{ lineHeight: 1.4 }}
+        >
           Ready to Bring Your Vision to Life? 🚀
         </h1>
       </div>
 
-      <Separator orientation="vertical" className="h-[300px]" />
+      <div className="hidden lg:block">
+        <Separator orientation="vertical" className="h-[300px]" />
+      </div>
 
       {/* Right */}
       <div className="lg:w-1/2">
@@ -33,9 +38,11 @@ export default function Contact() {
 
         <Separator className="my-8 w-full" />
 
-        <h4 className="text-xl font-bold">Get in touch</h4>
+        <h4 className="text-center text-xl font-bold lg:text-left">
+          Get in touch
+        </h4>
 
-        <div className="flex-center-between mt-4">
+        <div className="flex-center-between mt-4 flex-col gap-y-4 lg:flex-row">
           <div className="flex-center w-max gap-x-2 rounded border-2 bg-neutral-100 p-2 px-4 text-sm font-semibold text-primary-black">
             <Mail size={16} />
             <span>grapfismodigital@gmail.com</span>
