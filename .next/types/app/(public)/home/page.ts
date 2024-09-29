@@ -1,4 +1,4 @@
-// File: D:\uzzal-projects\graphics-designer-website\src\app\(public)\home\page.js
+// File: /root/graphics-designer-website/src/app/(public)/home/page.js
 import * as entry from '../../../../../src/app/(public)/home/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
