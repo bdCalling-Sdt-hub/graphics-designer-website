@@ -226,7 +226,7 @@ export default function SignUpForm() {
         loading={isLoading}
         disabled={isLoading}
         type="submit"
-        className="mt-8 h-[2.7rem] w-full rounded-2xl bg-primary-green font-semibold"
+        className="mt-8 h-[2.7rem] w-full rounded-2xl bg-primary-green font-semibold text-primary-white hover:bg-primary-green"
       >
         Create Account{" "}
         {isLoading && <Loader className="ml-2 animate-spin" size={16} />}

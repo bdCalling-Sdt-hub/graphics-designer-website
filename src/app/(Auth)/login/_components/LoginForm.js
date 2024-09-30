@@ -114,7 +114,7 @@ export default function LoginForm() {
         loading={isLoading}
         disabled={isLoading}
         type="submit"
-        className="mt-8 h-[2.7rem] w-full rounded-2xl border bg-primary-green font-medium capitalize shadow-none"
+        className="mt-8 h-[2.7rem] w-full rounded-2xl border bg-primary-green font-medium capitalize text-primary-white shadow-none hover:bg-primary-green"
       >
         SIGN IN{" "}
         {isLoading && <Loader className="ml-2 animate-spin" size={18} />}

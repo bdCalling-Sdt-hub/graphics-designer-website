@@ -187,7 +187,7 @@ export default function RequestFormModal({ open, setOpen }) {
             loading={isCreatingRequest}
             disabled={isCreatingRequest}
             type="submit"
-            className="mt-8 h-[2.7rem] w-full rounded-2xl bg-primary-green font-semibold"
+            className="mt-8 h-[2.7rem] w-full rounded-2xl bg-primary-green font-semibold text-primary-white hover:bg-primary-green"
           >
             Submit
             {isCreatingRequest && (
