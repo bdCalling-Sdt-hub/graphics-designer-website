@@ -19,21 +19,22 @@ export default function About() {
           <h3 className="my-7 text-4xl font-extrabold">Our Overview</h3>
 
           <p className="text-lg font-medium text-primary-black/75">
-            Carlio brand is one of the most reliable motor oil manufacturers,
-            which is engaged in the production of high quality products with a
-            history of more than decades in the industry. In order to get more
-            information about other aspects and products of the Carlio brand,
-            you can use the following buttons:
+            Welcome to Grafismo Digital, where creativity meets design. I&apos;m
+            a passionate graphic designer specializing in creating unique logos,
+            eye-catching banners or pretty much anything you can imagine. With a
+            keen eye for aesthetics and a dedication to bringing your vision to
+            life, I offer personalized design solutions tailored to your
+            brand&apos;s identity.
           </p>
 
           <p className="mt-8 text-lg font-medium text-primary-black/75">
-            The meaning of production in Carlio is the creation, development,
-            and the path to progress, and the starting point to achieve the
-            goals that we all have the Petroforce brand, with over 20 years of
-            experience in the oil and petrochemical industry, we officially
-            started our activities in the field of design, engineering,
-            construction of refinery equipment, and the production of various
-            motor and industrial lubricants in the year 1390 (2011)
+            Whether you&apos;re launching a new project, building a brand, or
+            refreshing your current visuals, I provide professional design
+            services through my Instagram account. From concept to creation, I
+            work closely with my clients to ensure every design reflects their
+            unique style and business goals. Connect with me on Instagram to
+            explore my portfolio and discuss how we can collaborate on your next
+            project!
           </p>
         </div>
 
